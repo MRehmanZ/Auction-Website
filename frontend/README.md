@@ -1,5 +1,6 @@
 # Planning
 
+- [x] Setup tailwind CSS for styling
 - [ ] Main authentication page (clerk)
 - [ ] Basic layout of the app including NavBar
 - [ ] Consume the RESTful service
@@ -7,3 +8,4 @@
 - [ ] Compatible with Mobile and Tablet
 - [ ] Make use of 'alt=' for to improve accessibility
 - [ ] Make use of external API (currency)?
+- [ ] Add pagination
