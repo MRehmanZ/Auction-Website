@@ -3,9 +3,9 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
+  { name: "Home", href: "#", current: true },
+  { name: "Auctions", href: "#", current: false },
+  { name: "About Me", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
 
@@ -33,16 +33,17 @@ export default function NavBar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
+                  {/* <img
                     className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                    src="https://tailwindui.com/img/logos/Bidify-mark-indigo-500.svg"
                     alt="Workflow"
-                  />
-                  <img
+                  /> */}
+                  {/* <img
                     className="hidden lg:block h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                     alt="Workflow"
-                  />
+                  /> */}
+                  <h3 className="text-3xl text-white font-bold hover:text-gray-700 px-2">Bidify</h3>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
@@ -80,8 +81,8 @@ export default function NavBar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
+                        src="/MRZ.jpeg" fill
+                        alt="image"
                       />
                     </Menu.Button>
                   </div>
