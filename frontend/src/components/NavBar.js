@@ -1,14 +1,12 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import axios from "axios";
-
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "Auctions", href: "/register", current: false },
+  { name: "Auctions", href: "/create-auction", current: false },
   { name: "About Us", href: "/login", current: false },
 ];
 
@@ -36,16 +34,11 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
-                  />
+                  <Link to="/">
+                    <h3 className="text-3xl text-white font-bold hover:text-gray-700 px-2">
+                      Bidify
+                    </h3>
+                  </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
