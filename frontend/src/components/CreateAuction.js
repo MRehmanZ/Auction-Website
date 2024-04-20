@@ -8,6 +8,8 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +22,7 @@ const CreateAuction = () => {
   const [isActive, setIsActive] = useState(false);
   const [price, setPrice] = useState();
   const [category, setCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -91,6 +94,7 @@ const CreateAuction = () => {
           IsActive: isActive,
           price: Number(price),
           CategoryName: category,
+          ImageUrl: imageUrl,
         },
         {
           headers: {
@@ -114,11 +118,6 @@ const CreateAuction = () => {
 
   const handleActiveToggle = () => {
     setIsActive(!isActive);
-  };
-
-  const getLabelFromValue = (value) => {
-    const condition = conditions.find((c) => c.value === value);
-    return condition ? condition.label : "";
   };
 
   const handleConditionSelect = (e) => {
@@ -185,6 +184,10 @@ const CreateAuction = () => {
               placeholder="Enter item description"
               onChange={(e) => setDescription(e.target.value)}
             />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="image">Upload Image</Label>
+            <Input id="image" type="file" />
           </div>
           <div>
             <label
