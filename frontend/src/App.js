@@ -5,6 +5,9 @@ import Register from "./components/Register"; // Assuming you have this componen
 import VerifyEmail from "./components/VerifyEmail"; // Assuming you have this component
 import NavBar from "./components/NavBar"; // Assuming you have this component
 import Home from "./components/Home";
+import axios from "axios";
+import { toast } from "sonner";
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -12,8 +15,14 @@ const App = () => {
     setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("token"); // Remove token from localStorage
+    const response = await axios.post(
+      `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/account/logout`
+    );
+    if (response.status === 200) {
+      toast.success("Successfully signed out");
+    }
     setIsLoggedIn(false);
   };
 
