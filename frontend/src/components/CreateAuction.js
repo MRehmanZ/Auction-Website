@@ -33,7 +33,7 @@ const CreateAuction = () => {
 
   const conditions = [
     { label: "NEW", value: 0 },
-    { label: "Excellent", value: 1 },
+    { label: "EXCELLENT", value: 1 },
     { label: "GOOD", value: 2 },
     { label: "USED", value: 3 },
     { label: "REFURBISHED", value: 4 },
@@ -248,7 +248,10 @@ const CreateAuction = () => {
               >
                 Category
               </label>
-              <Select id="category" onValueChange={(e) => setCategory(e)}>
+              <Select
+                id="category"
+                onValueChange={(e) => handleCategorySelect(e)}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>

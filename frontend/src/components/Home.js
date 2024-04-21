@@ -41,19 +41,23 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            auctionItems.map((item) => (
-              <AuctionItem
-                key={item.auctionId}
-                name={item.name}
-                description={item.description}
-                price={item.price}
-                condition={item.condition}
-                category={item.category}
-                createdDate={format(item.createdDate, "MM dd yyyy, h:mm a")}
-                expiryDate={format(item.expiryDate, "MM dd yyyy, h:mm a")}
-                currentHighestBid={item.currentHighestBid}
-              />
-            ))
+            auctionItems.map(
+              (item) =>
+                item.isActive && (
+                  <AuctionItem
+                    key={item.auctionId}
+                    name={item.name}
+                    description={item.description}
+                    price={item.price}
+                    condition={item.condition}
+                    category={item.category}
+                    createdDate={format(item.createdDate, "dd/MM/yyyy, h:mm a")}
+                    expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
+                    currentHighestBid={item.currentHighestBid}
+                    auctionId={item.auctionId}
+                  />
+                )
+            )
           )}
         </div>
       </div>

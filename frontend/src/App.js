@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Toaster } from "sonner";
 
 import CreateAuction from "./components/CreateAuction";
+import Auction from "./components/Auction";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,10 +45,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/verify-email" element={<VerifyEmail />}></Route>
-          <Route path="/create-auction" element={<CreateAuction />}></Route>
-          {/* Add other routes for your application */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/create-auction" element={<CreateAuction />} />
+          <Route path="/auction/:auction_id" element={<Auction />} />
         </Routes>
       </div>
     </Router>

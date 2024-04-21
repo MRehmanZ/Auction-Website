@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const AuctionItem = ({
@@ -9,6 +10,7 @@ const AuctionItem = ({
   createdDate,
   expiryDate,
   currentHighestBid,
+  auctionId,
 }) => {
   const conditions = [
     { label: "New", value: 0 },
@@ -22,6 +24,13 @@ const AuctionItem = ({
   const getConditionLabel = (value) => {
     const condition = conditions.find((c) => c.value === value);
     return condition ? condition.label : null;
+  };
+
+  const navigate = useNavigate();
+
+  const handlePlaceBidClick = () => {
+    // Redirect to the auction details page with the auctionId
+    navigate(`/auction/${auctionId}`);
   };
 
   return (
@@ -80,7 +89,9 @@ const AuctionItem = ({
               £{currentHighestBid ? currentHighestBid : price}
             </span>
           </div>
-          <Button size="sm">Place Bid</Button>
+          <Button size="sm" onClick={handlePlaceBidClick}>
+            Place Bid
+          </Button>
         </div>
       </div>
     </div>

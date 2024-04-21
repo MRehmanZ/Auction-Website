@@ -6,8 +6,7 @@ import { Button } from "react-bootstrap";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "Auctions", href: "/create-auction", current: false },
-  { name: "About Us", href: "/login", current: false },
+  { name: "Create Auction", href: "/create-auction", current: false },
 ];
 
 function classNames(...classes) {
