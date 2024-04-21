@@ -54,10 +54,9 @@ export default function Auction() {
         );
         if (response.data.data) {
           const item = response.data.data;
-          console.log(item);
 
           setName(item.name);
-          setBids(item.bids);
+          setBids(item.bids.$values);
           setCategory(item.category); // TODO
           setComments(item.comments);
           setCreatedDate(item.createdDate);
@@ -70,6 +69,9 @@ export default function Auction() {
           setDescription(item.description);
 
           setLoading(false);
+
+          //   console.log(item);
+          console.log(bids);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -199,7 +201,16 @@ export default function Auction() {
               <CardTitle>All Bids</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4">{/* <Bid /> */}</div>
+              <div className="grid gap-4">
+                {bids.toReversed().map((b) => (
+                  <Bid
+                    key={b.bidId}
+                    userId={b.userId}
+                    price={b.price}
+                    createdDate={b.dateCreated}
+                  />
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>

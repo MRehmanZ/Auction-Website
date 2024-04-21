@@ -16,9 +16,9 @@ const Home = () => {
           `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction`
         );
         if (response.data) {
-          setAuctionItems(response.data);
+          setAuctionItems(response.data.$values);
         }
-        console.log(response);
+        console.log(response.data.$values);
       } catch (error) {
         console.error("Error fetching auction items:", error);
         setError("Error fetching auction items. Please try again.");

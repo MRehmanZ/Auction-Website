@@ -4,15 +4,16 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-const Bid = ({ bidId }) => {
+const Bid = ({ price, userId, createdDate, bidId }) => {
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBid = async () => {
+    const fetchUser = async () => {
       try {
-        console.log("Auction Id: " + bidId);
+        // console.log("User Id: " + userId);
         const token = localStorage.getItem("token");
         if (!token) {
           toast.error("Please login.");
@@ -20,7 +21,7 @@ const Bid = ({ bidId }) => {
           return;
         }
         const response = await axios.get(
-          `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/bid/${bidId}`,
+          `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/user/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -28,6 +29,8 @@ const Bid = ({ bidId }) => {
           }
         );
         if (response.data.data) {
+          setUsername(response.data.data.userName);
+          console.log(username);
           setLoading(false);
         }
       } catch (error) {
@@ -35,7 +38,7 @@ const Bid = ({ bidId }) => {
         setLoading(false);
       }
     };
-    fetchBid();
+    fetchUser();
   }, []);
 
   return (
@@ -46,13 +49,13 @@ const Bid = ({ bidId }) => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div>
-          <div className="font-medium">John Doe</div>
+          <div className="font-medium">{username}</div>
           <div className="text-sm text-gray-500 dark:text-gray-400">
-            2023-04-15
+            {createdDate}
           </div>
         </div>
       </div>
-      <div className="text-lg font-bold">$130</div>
+      <div className="text-lg font-bold">£{price}</div>
     </div>
   );
 };
