@@ -55,6 +55,7 @@ const Home = () => {
                     expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
                     currentHighestBid={item.currentHighestBid}
                     auctionId={item.auctionId}
+                    imageUrl={item.imageUrl}
                   />
                 )
             )

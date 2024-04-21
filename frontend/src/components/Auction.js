@@ -156,17 +156,27 @@ export default function Auction() {
       <div className="grid md:grid-cols-2 gap-8">
         <div className="grid gap-6">
           <div className="rounded-lg overflow-hidden">
-            <img
-              alt="Auction Item"
-              className="w-full h-auto object-cover"
-              height={600}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "800/600",
-                objectFit: "cover",
-              }}
-              width={800}
-            />
+            {imageUrl ? (
+              <div className="mb-4">
+                <img
+                  src={imageUrl}
+                  alt={name}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            ) : (
+              <img
+                alt="Auction Item"
+                className="w-full h-full object-cover"
+                height="450"
+                src="/placeholder.svg"
+                style={{
+                  aspectRatio: "600/450",
+                  objectFit: "cover",
+                }}
+                width="600"
+              />
+            )}
           </div>
           <div className="grid gap-4">
             <h1 className="text-2xl font-bold">{name}</h1>

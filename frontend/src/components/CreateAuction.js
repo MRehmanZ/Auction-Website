@@ -29,6 +29,8 @@ const CreateAuction = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [imageFile, setImageFile] = useState(null);
+
   const navigate = useNavigate();
 
   const conditions = [
@@ -75,25 +77,60 @@ const CreateAuction = () => {
     fetchCategories();
   }, [categories]);
 
-  const handleCreateAuction = async (e) => {
-    console.log(
-      name,
-      condition,
-      description,
-      isActive,
-      price,
-      category,
-      imageUrl,
-      expiryDate
-    );
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast.error("Please login.");
-        return;
-      }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
 
+    // Display image preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCreateAuction = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login.");
+      return;
+    }
+
+    if (!imageFile) {
+      toast.error("Please select an image file.");
+      return;
+    }
+
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    try {
+      // Send a POST request to upload the image
+      const response = await axios.post(
+        `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction/upload-image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Assuming the response contains the URL of the uploaded image
+      setImageUrl(response.data.imageUrl);
+
+      // Use the imageUrl in your create auction request
+      // Other parts of the request...
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Error uploading image. Please try again.");
+    }
+
+    try {
       const response = await axios.post(
         `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction`,
         {
@@ -207,9 +244,15 @@ const CreateAuction = () => {
             <Input
               id="image"
               type="file"
-              onChange={(e) => setImageUrl(e.target.value)}
+              onChange={(e) => handleImageChange(e)}
             />
           </div>
+          {imageUrl && (
+            <div className="mt-4">
+              <label className="block mb-2">Image Preview:</label>
+              <img src={imageUrl} alt="Preview" className="w-full" />
+            </div>
+          )}
           <div>
             <label
               className="block text-gray-700 dark:text-gray-300 font-medium mb-2"

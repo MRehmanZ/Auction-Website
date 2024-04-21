@@ -11,6 +11,7 @@ const AuctionItem = ({
   expiryDate,
   currentHighestBid,
   auctionId,
+  imageUrl,
 }) => {
   const conditions = [
     { label: "New", value: 0 },
@@ -36,17 +37,27 @@ const AuctionItem = ({
   return (
     <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden">
       <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-800">
-        <img
-          alt="Auction Item"
-          className="w-full h-full object-cover"
-          height="450"
-          src="/placeholder.svg"
-          style={{
-            aspectRatio: "600/450",
-            objectFit: "cover",
-          }}
-          width="600"
-        />
+        {imageUrl ? (
+          <div className="mb-4">
+            <img
+              src={imageUrl}
+              alt={name}
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        ) : (
+          <img
+            alt="Auction Item"
+            className="w-full h-full object-cover"
+            height="450"
+            src="/placeholder.svg"
+            style={{
+              aspectRatio: "600/450",
+              objectFit: "cover",
+            }}
+            width="600"
+          />
+        )}
       </div>
       <div className="p-4 md:p-6">
         <h2 className="text-xl font-bold mb-2">{name}</h2>
