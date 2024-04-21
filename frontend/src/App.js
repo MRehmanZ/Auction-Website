@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 
 import CreateAuction from "./components/CreateAuction";
 import Auction from "./components/Auction";
+import Paginate from "./components/Paginate";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

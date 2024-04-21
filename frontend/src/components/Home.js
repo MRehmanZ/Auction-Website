@@ -3,11 +3,17 @@ import AuctionItem from "./AuctionItem";
 import { toast } from "sonner";
 import axios from "axios";
 import { format } from "date-fns";
+import Paginate from "./Paginate";
 
 const Home = () => {
   const [auctionItems, setAuctionItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages] = useState(5);
+
+  const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchAuctionItems = async () => {
@@ -31,6 +37,10 @@ const Home = () => {
     fetchAuctionItems();
   }, []);
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
       <div className="container mx-auto py-8 px-4 md:px-6">
@@ -41,26 +51,36 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            auctionItems.map(
-              (item) =>
-                item.isActive && (
-                  <AuctionItem
-                    key={item.auctionId}
-                    name={item.name}
-                    description={item.description}
-                    price={item.price}
-                    condition={item.condition}
-                    category={item.categoryName}
-                    createdDate={format(item.createdDate, "dd/MM/yyyy, h:mm a")}
-                    expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
-                    currentHighestBid={item.currentHighestBid}
-                    auctionId={item.auctionId}
-                    imageUrl={item.imageUrl}
-                  />
-                )
-            )
+            auctionItems
+              .slice(startIndex, endIndex)
+              .map(
+                (item) =>
+                  item.isActive && (
+                    <AuctionItem
+                      key={item.auctionId}
+                      name={item.name}
+                      description={item.description}
+                      price={item.price}
+                      condition={item.condition}
+                      category={item.categoryName}
+                      createdDate={format(
+                        item.createdDate,
+                        "dd/MM/yyyy, h:mm a"
+                      )}
+                      expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
+                      currentHighestBid={item.currentHighestBid}
+                      auctionId={item.auctionId}
+                      imageUrl={item.imageUrl}
+                    />
+                  )
+              )
           )}
         </div>
+        <Paginate
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       </div>
     </>
   );
