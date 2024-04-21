@@ -18,7 +18,7 @@ const Home = () => {
         if (response.data) {
           setAuctionItems(response.data.$values);
         }
-        console.log(response.data.$values);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching auction items:", error);
         setError("Error fetching auction items. Please try again.");
@@ -50,7 +50,7 @@ const Home = () => {
                     description={item.description}
                     price={item.price}
                     condition={item.condition}
-                    category={item.category}
+                    category={item.categoryName}
                     createdDate={format(item.createdDate, "dd/MM/yyyy, h:mm a")}
                     expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
                     currentHighestBid={item.currentHighestBid}

@@ -58,8 +58,9 @@ const CreateAuction = () => {
               },
             }
           );
-          if (response.data.data) {
-            const categoryNames = response.data.data.map((c) => c.name);
+
+          if (response.data.data.$values) {
+            const categoryNames = response.data.data.$values.map((c) => c.name);
             setCategories(categoryNames);
             setCategory(categoryNames[0]);
             setLoading(false);
@@ -101,7 +102,7 @@ const CreateAuction = () => {
           Description: description,
           IsActive: isActive,
           price: Number(price),
-          CategoryName: category,
+          categoryName: category,
           ImageUrl: imageUrl,
           ExpiryDate: expiryDate,
         },
@@ -140,7 +141,6 @@ const CreateAuction = () => {
 
   const handleCategorySelect = (e) => {
     setCategory(e);
-    console.log(category);
   };
 
   return (

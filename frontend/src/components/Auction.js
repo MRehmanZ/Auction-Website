@@ -28,6 +28,8 @@ export default function Auction() {
 
   const [placeBidPrice, setPlaceBidPrice] = useState();
 
+  const [comment, setComment] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const { auction_id } = useParams();
@@ -57,24 +59,21 @@ export default function Auction() {
 
           setName(item.name);
           setBids(item.bids.$values);
-          setCategory(item.category); // TODO
-          setComments(item.comments);
+          setCategory(item.categoryName);
+          setComments(item.comments.$values);
           setCreatedDate(item.createdDate);
           setCondition(item.condition);
           setExpiryDate(item.expiryDate);
           setCurrentHighestBid(item.currentHighestBid);
           setImageUrl(item.imageUrl);
-          setUser(item.user); // TODO
+          setUser(item.user);
           setPrice(item.price);
           setDescription(item.description);
 
           setLoading(false);
-
-          //   console.log(item);
-          console.log(bids);
         }
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching auction:", error);
         setLoading(false);
       }
     };
@@ -105,6 +104,42 @@ export default function Auction() {
       console.log(response.status);
       if (response.status === 200) {
         toast.success("Bid placed successfully");
+
+        navigate(0);
+      } else {
+        toast.warning("There is something wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error placing bid:", err);
+      toast.error("Please enter correct amount");
+    }
+  };
+
+  const handleSubmitComment = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please login.");
+        return;
+      }
+
+      console.log("PLACE BID, auction id: " + auction_id);
+      const response = await axios.post(
+        `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/comment`,
+        {
+          description: comment,
+          auctionId: auction_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.status);
+      if (response.status === 201) {
+        toast.success("Comment submitted successfully");
 
         navigate(0);
       } else {
@@ -165,7 +200,7 @@ export default function Auction() {
               <p>{description}</p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="text-4xl font-bold">{currentHighestBid}</div>
+              <div className="text-4xl font-bold">£{currentHighestBid}</div>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Current Highest Bid
               </div>
@@ -221,17 +256,24 @@ export default function Auction() {
             <CardTitle>Comments</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="grid gap-4">
+            <form className="grid gap-4" onSubmit={handleSubmitComment}>
               <Textarea
                 className="p-4 min-h-[100px]"
                 placeholder="Write your comment..."
+                onChange={(e) => setComment(e.target.value)}
               />
               <Button size="sm">Submit</Button>
             </form>
           </CardContent>
         </Card>
         <div className="mt-6 grid gap-4">
-          <Comment />
+          {comments.toReversed().map((c) => (
+            <Comment
+              key={c.commendId}
+              description={c.description}
+              userId={c.userId}
+            />
+          ))}
         </div>
       </div>
     </div>

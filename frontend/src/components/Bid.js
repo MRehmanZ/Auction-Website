@@ -13,7 +13,6 @@ const Bid = ({ price, userId, createdDate, bidId }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // console.log("User Id: " + userId);
         const token = localStorage.getItem("token");
         if (!token) {
           toast.error("Please login.");
