@@ -7,9 +7,23 @@ const AuctionItem = ({
   condition,
   category,
   createdDate,
-  expiryData,
+  expiryDate,
   currentHighestBid,
 }) => {
+  const conditions = [
+    { label: "New", value: 0 },
+    { label: "Excellent", value: 1 },
+    { label: "Good", value: 2 },
+    { label: "Used", value: 3 },
+    { label: "Refurbished", value: 4 },
+    { label: "Poor", value: 5 },
+  ];
+
+  const getConditionLabel = (value) => {
+    const condition = conditions.find((c) => c.value === value);
+    return condition ? condition.label : null;
+  };
+
   return (
     <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden">
       <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-800">
@@ -29,7 +43,7 @@ const AuctionItem = ({
         <h2 className="text-xl font-bold mb-2">{name}</h2>
         <div className="flex items-center mb-2">
           <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs font-medium">
-            {condition} condition
+            {getConditionLabel(condition)} condition
           </span>
           <span className="ml-2 text-gray-500 dark:text-gray-400 text-sm">
             Category: {category}
@@ -41,18 +55,21 @@ const AuctionItem = ({
             <span className="text-gray-500 dark:text-gray-400 text-sm">
               Created:
             </span>
-            <span className="ml-2 text-gray-700 dark:text-gray-300 text-sm">
+            <span className="ml-1 text-gray-700 dark:text-gray-300 text-sm">
               {createdDate}
             </span>
           </div>
-          <div>
-            <span className="text-gray-500 dark:text-gray-400 text-sm">
-              Expires:
-            </span>
-            <span className="ml-2 text-gray-700 dark:text-gray-300 text-sm">
-              {expiryData}
-            </span>
-          </div>
+
+          {expiryDate ? (
+            <div>
+              <span className="text-gray-500 dark:text-gray-400 text-sm">
+                Expires:
+              </span>
+              <span className="ml-1 text-gray-700 dark:text-gray-300 text-sm">
+                {expiryDate}
+              </span>
+            </div>
+          ) : null}
         </div>
         <div className="flex items-center justify-between">
           <div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AuctionItem from "./AuctionItem";
 import { toast } from "sonner";
 import axios from "axios";
+import { format } from "date-fns";
 
 const Home = () => {
   const [auctionItems, setAuctionItems] = useState([]);
@@ -21,6 +22,7 @@ const Home = () => {
       } catch (error) {
         console.error("Error fetching auction items:", error);
         setError("Error fetching auction items. Please try again.");
+        toast.error("There is something wrong. Please refresh the page.");
       } finally {
         setLoading(false);
       }
@@ -47,6 +49,9 @@ const Home = () => {
                 price={item.price}
                 condition={item.condition}
                 category={item.category}
+                createdDate={format(item.createdDate, "MM dd yyyy, h:mm a")}
+                expiryDate={format(item.expiryDate, "MM dd yyyy, h:mm a")}
+                currentHighestBid={item.currentHighestBid}
               />
             ))
           )}

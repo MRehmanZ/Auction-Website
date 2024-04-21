@@ -23,6 +23,7 @@ const CreateAuction = () => {
   const [price, setPrice] = useState();
   const [category, setCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [expiryDate, setExpiryDate] = useState();
 
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,8 +33,11 @@ const CreateAuction = () => {
 
   const conditions = [
     { label: "NEW", value: 0 },
-    { label: "USED", value: 1 },
-    { label: "REFURBISHED", value: 2 },
+    { label: "Excellent", value: 1 },
+    { label: "GOOD", value: 2 },
+    { label: "USED", value: 3 },
+    { label: "REFURBISHED", value: 4 },
+    { label: "POOR", value: 5 },
   ];
 
   useEffect(() => {
@@ -43,6 +47,7 @@ const CreateAuction = () => {
           const token = localStorage.getItem("token");
           if (!token) {
             toast.error("Please login.");
+            navigate("/login?redirectTo=create-auction");
             return;
           }
           const response = await axios.get(
@@ -70,7 +75,16 @@ const CreateAuction = () => {
   }, [categories]);
 
   const handleCreateAuction = async (e) => {
-    console.log(name, condition, description, isActive, price, category);
+    console.log(
+      name,
+      condition,
+      description,
+      isActive,
+      price,
+      category,
+      imageUrl,
+      expiryDate
+    );
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -82,12 +96,6 @@ const CreateAuction = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction`,
         {
-          //   name: name,
-          //   condition: condition,
-          //   Description: description,
-          //   IsActive: isActive,
-          //   price: 25000,
-          //   CategoryName: category,
           name: name,
           condition: Number(condition),
           Description: description,
@@ -95,6 +103,7 @@ const CreateAuction = () => {
           price: Number(price),
           CategoryName: category,
           ImageUrl: imageUrl,
+          ExpiryDate: expiryDate,
         },
         {
           headers: {
@@ -120,9 +129,18 @@ const CreateAuction = () => {
     setIsActive(!isActive);
   };
 
+  const getConditionValue = (label) => {
+    const condition = conditions.find((c) => c.label === label);
+    return condition ? condition.value : null;
+  };
+
   const handleConditionSelect = (e) => {
-    console.log(e);
-    setCondition(e);
+    setCondition(getConditionValue(e));
+  };
+
+  const handleCategorySelect = (e) => {
+    setCategory(e);
+    console.log(category);
   };
 
   return (
@@ -155,7 +173,6 @@ const CreateAuction = () => {
               Condition
             </label>
             <Select
-              value={condition}
               onValueChange={(e) => handleConditionSelect(e)}
               id="condition"
             >
@@ -164,7 +181,7 @@ const CreateAuction = () => {
               </SelectTrigger>
               <SelectContent>
                 {conditions.map((c) => (
-                  <SelectItem key={c.label} value={c.value}>
+                  <SelectItem key={c.value} value={c.label}>
                     {c.label}
                   </SelectItem>
                 ))}
@@ -187,7 +204,11 @@ const CreateAuction = () => {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="image">Upload Image</Label>
-            <Input id="image" type="file" />
+            <Input
+              id="image"
+              type="file"
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
           </div>
           <div>
             <label
@@ -227,7 +248,7 @@ const CreateAuction = () => {
               >
                 Category
               </label>
-              <Select id="category">
+              <Select id="category" onValueChange={(e) => setCategory(e)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -241,6 +262,14 @@ const CreateAuction = () => {
               </Select>
             </div>
           )}
+          <div className="grid gap-2">
+            <Label htmlFor="expiry">Expiry Date</Label>
+            <Input
+              id="expiry"
+              type="date"
+              onChange={(e) => setExpiryDate(e.target.value)}
+            />
+          </div>
 
           <Button className="w-full" type="submit">
             Create Auction Item
