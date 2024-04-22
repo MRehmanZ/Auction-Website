@@ -11,7 +11,7 @@ import { Toaster } from "sonner";
 
 import CreateAuction from "./components/CreateAuction";
 import Auction from "./components/Auction";
-import Paginate from "./components/Paginate";
+import AboutUs from "./components/AboutUs";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +53,7 @@ const App = () => {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/create-auction" element={<CreateAuction />} />
           <Route path="/auction/:auction_id" element={<Auction />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </div>
     </Router>

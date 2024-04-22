@@ -3,14 +3,13 @@ import { CardTitle, CardHeader, CardContent, Card } from "./ui/card";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { AvatarImage, AvatarFallback, Avatar } from "./ui/avatar";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import Comment from "./Comment";
 import Bid from "./Bid";
-import { AirVent } from "lucide-react";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function Auction() {
   const [name, setName] = useState("");
@@ -153,139 +152,145 @@ export default function Auction() {
 
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="grid gap-6">
-          <div className="rounded-lg overflow-hidden">
-            {imageUrl ? (
-              <div className="mb-4">
-                <img
-                  src={imageUrl}
-                  alt={name}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            ) : (
-              <img
-                alt="Auction Item"
-                className="w-full h-full object-cover"
-                height="450"
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "600/450",
-                  objectFit: "cover",
-                }}
-                width="600"
-              />
-            )}
-          </div>
-          <div className="grid gap-4">
-            <h1 className="text-2xl font-bold">{name}</h1>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Condition
-                </p>
-                <p>{condition}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Category
-                </p>
-                <p>{category}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Created
-                </p>
-                <p>{createdDate}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Expires
-                </p>
-                <p>{expiryDate}</p>
-              </div>
-            </div>
-            <div className="prose max-w-none">
-              <p>{description}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-4xl font-bold">£{currentHighestBid}</div>
-              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                Current Highest Bid
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="grid gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Place a Bid</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form className="grid gap-4" onSubmit={handlePlaceBid}>
-                <div className="grid gap-2">
-                  <Label className="text-base" htmlFor="bid-amount">
-                    Bid Amount
-                  </Label>
-                  <Input
-                    id="bid-amount"
-                    min={currentHighestBid}
-                    placeholder="Enter your bid amount"
-                    step={5}
-                    type="number"
-                    onChange={(e) => setPlaceBidPrice(e.target.value)}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid gap-6">
+              <div className="rounded-lg overflow-hidden">
+                {imageUrl ? (
+                  <div className="mb-4">
+                    <img
+                      src={imageUrl}
+                      alt={name}
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    alt="Auction Item"
+                    className="w-full h-full object-cover"
+                    height="450"
+                    src="/placeholder.svg"
+                    style={{
+                      aspectRatio: "600/450",
+                      objectFit: "cover",
+                    }}
+                    width="600"
                   />
-                </div>
-                <Button size="lg">Place Bid</Button>
-              </form>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>All Bids</CardTitle>
-            </CardHeader>
-            <CardContent>
+                )}
+              </div>
               <div className="grid gap-4">
-                {bids.toReversed().map((b) => (
-                  <Bid
-                    key={b.bidId}
-                    userId={b.userId}
-                    price={b.price}
-                    createdDate={b.dateCreated}
-                  />
-                ))}
+                <h1 className="text-2xl font-bold">{name}</h1>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Condition
+                    </p>
+                    <p>{condition}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Category
+                    </p>
+                    <p>{category}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Created
+                    </p>
+                    <p>{createdDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Expires
+                    </p>
+                    <p>{expiryDate}</p>
+                  </div>
+                </div>
+                <div className="prose max-w-none">
+                  <p>{description}</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-4xl font-bold">£{currentHighestBid}</div>
+                  <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Current Highest Bid
+                  </div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-      <div className="mt-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Comments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form className="grid gap-4" onSubmit={handleSubmitComment}>
-              <Textarea
-                className="p-4 min-h-[100px]"
-                placeholder="Write your comment..."
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <Button size="sm">Submit</Button>
-            </form>
-          </CardContent>
-        </Card>
-        <div className="mt-6 grid gap-4">
-          {comments.toReversed().map((c) => (
-            <Comment
-              key={c.commendId}
-              description={c.description}
-              userId={c.userId}
-            />
-          ))}
-        </div>
-      </div>
+            </div>
+            <div className="grid gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Place a Bid</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form className="grid gap-4" onSubmit={handlePlaceBid}>
+                    <div className="grid gap-2">
+                      <Label className="text-base" htmlFor="bid-amount">
+                        Bid Amount
+                      </Label>
+                      <Input
+                        id="bid-amount"
+                        min={currentHighestBid}
+                        placeholder="Enter your bid amount"
+                        step={5}
+                        type="number"
+                        onChange={(e) => setPlaceBidPrice(e.target.value)}
+                      />
+                    </div>
+                    <Button size="lg">Place Bid</Button>
+                  </form>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>All Bids</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4">
+                    {bids.toReversed().map((b) => (
+                      <Bid
+                        key={b.bidId}
+                        userId={b.userId}
+                        price={b.price}
+                        createdDate={b.dateCreated}
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          <div className="mt-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Comments</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form className="grid gap-4" onSubmit={handleSubmitComment}>
+                  <Textarea
+                    className="p-4 min-h-[100px]"
+                    placeholder="Write your comment..."
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <Button size="sm">Submit</Button>
+                </form>
+              </CardContent>
+            </Card>
+            <div className="mt-6 grid gap-4">
+              {comments.toReversed().map((c) => (
+                <Comment
+                  key={c.commendId}
+                  description={c.description}
+                  userId={c.userId}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

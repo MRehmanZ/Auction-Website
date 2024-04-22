@@ -9,7 +9,6 @@ import LoadingSpinner from "./LoadingSpinner";
 const Home = () => {
   const [auctionItems, setAuctionItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages] = useState(5);
@@ -28,7 +27,6 @@ const Home = () => {
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching auction items:", error);
-        setError("Error fetching auction items. Please try again.");
         toast.error("There is something wrong. Please refresh the page.");
       } finally {
         setLoading(false);
