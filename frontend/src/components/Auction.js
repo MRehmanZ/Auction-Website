@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import Comment from "./Comment";
 import Bid from "./Bid";
 import LoadingSpinner from "./LoadingSpinner";
+import { format } from "date-fns";
 
 export default function Auction() {
   const [name, setName] = useState("");
@@ -150,6 +151,20 @@ export default function Auction() {
     }
   };
 
+  const conditions = [
+    { label: "New", value: 0 },
+    { label: "Excellent", value: 1 },
+    { label: "Good", value: 2 },
+    { label: "Used", value: 3 },
+    { label: "Refurbished", value: 4 },
+    { label: "Poor", value: 5 },
+  ];
+
+  const getConditionLabel = (value) => {
+    const condition = conditions.find((c) => c.value === value);
+    return condition ? condition.label : null;
+  };
+
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
       {loading ? (
@@ -188,7 +203,7 @@ export default function Auction() {
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Condition
                     </p>
-                    <p>{condition}</p>
+                    <p>{getConditionLabel(condition)}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -200,13 +215,13 @@ export default function Auction() {
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Created
                     </p>
-                    <p>{createdDate}</p>
+                    <p>{format(createdDate, "dd/MM/yyyy, h:mm a")}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Expires
                     </p>
-                    <p>{expiryDate}</p>
+                    <p>{format(expiryDate, "dd/MM/yyyy, h:mm a")}</p>
                   </div>
                 </div>
                 <div className="prose max-w-none">
