@@ -36,7 +36,7 @@ const AuctionItem = ({
 
   return (
     <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden">
-      <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+      <div className="aspect-[4/3]  dark:bg-gray-800 flex items-center justify-center">
         {imageUrl ? (
           <div className="mb-4">
             <img
