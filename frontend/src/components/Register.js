@@ -25,11 +25,14 @@ function Register({ onLogin }) {
       );
 
       if (response.status === 200) {
-        toast.success("Registered successfully");
-        const token = response.data.token;
-        localStorage.setItem("token", token); // Store token in localStorage so the user is logged in after registration
-        onLogin();
-        navigate("/");
+        if (response.data) {
+          toast.success(response.data);
+        } else {
+          toast.success(
+            "Registration is successful. Verification link is send to your email."
+          );
+        }
+        navigate("/login");
       }
     } catch (error) {
       console.error(error);
