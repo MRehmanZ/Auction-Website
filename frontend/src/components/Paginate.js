@@ -2,17 +2,16 @@ import React from "react";
 
 const Paginate = ({ totalPages, currentPage, onPageChange }) => {
   const getPageNumbers = () => {
-    const MAX_PAGES_TO_SHOW = totalPages; // Maximum number of pages to show
     let startPage = 1;
     let endPage = totalPages;
 
-    if (totalPages > MAX_PAGES_TO_SHOW) {
-      const HALF_PAGES_TO_SHOW = Math.floor(MAX_PAGES_TO_SHOW / 2);
+    if (totalPages > totalPages) {
+      const HALF_PAGES_TO_SHOW = Math.floor(totalPages / 2);
 
       if (currentPage <= HALF_PAGES_TO_SHOW + 1) {
-        endPage = MAX_PAGES_TO_SHOW;
+        endPage = totalPages;
       } else if (currentPage >= totalPages - HALF_PAGES_TO_SHOW) {
-        startPage = totalPages - MAX_PAGES_TO_SHOW + 1;
+        startPage = totalPages - totalPages + 1;
       } else {
         startPage = currentPage - HALF_PAGES_TO_SHOW;
         endPage = currentPage + HALF_PAGES_TO_SHOW;
@@ -49,7 +48,7 @@ const Paginate = ({ totalPages, currentPage, onPageChange }) => {
             <button
               className="page-link inline-block px-2 font-semibold"
               onClick={() => onPageChange(number)}
-              style={{ marginRight: "5px" }} // Inline style for spacing
+              style={{ marginRight: "5px" }}
             >
               {number}
             </button>
