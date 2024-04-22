@@ -10,20 +10,57 @@ using System.Security.Claims;
 
 namespace AuctionBackend.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class AuctionController : ControllerBase
     {
         private readonly AuctionContext _context;
+        private readonly string _mediaFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "media");
 
         public AuctionController(AuctionContext context)
         {
             _context = context;
         }
 
+
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest("No file uploaded.");
+                }
+
+                if (!Directory.Exists(_mediaFolderPath))
+                {
+                    Directory.CreateDirectory(_mediaFolderPath);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var filePath = Path.Combine(_mediaFolderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var relativePath = Path.Combine("media", fileName);
+                return Ok(new { imageUrl = relativePath });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
+
         // GET: api/auction
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetAuctions()
         {
             try
@@ -45,7 +82,16 @@ namespace AuctionBackend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuction(string id)
         {
-            var auction = await _context.Auctions.FindAsync(id);
+            var auction = await _context.Auctions
+                .Include(a => a.Bids) // Include the bids navigation property
+                .Include(a => a.Comments) // Include the comments navigation property
+                .FirstOrDefaultAsync(a => a.AuctionId.Equals(new Guid(id)));
+
+            if (auction != null)
+            {
+                var bids = auction.Bids.ToList();
+                // Now 'bids' contains the list of bids associated with the auction
+            }
 
             if (auction == null)
             {
@@ -77,7 +123,7 @@ namespace AuctionBackend.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(c => c.Id.ToString() == userId.ToString());
 
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name.ToLower() == auction.CategoryName.ToLower());
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name.ToLower().Equals(auction.CategoryName.ToLower()));
 
             // Create a new auction
             var newAuction = new Auction
@@ -85,11 +131,13 @@ namespace AuctionBackend.Controllers
                 Name = auction.Name,
                 Description = auction.Description,
                 CategoryId = category.CategoryId,
+                CategoryName = auction.CategoryName,
                 UserId = userId,
                 Condition = auction.Condition,
                 ExpiryDate = auction.ExpiryDate,
                 Price = auction.Price,
                 IsActive = auction.IsActive,
+                ImageUrl = auction.ImageUrl,
 
                 Bids = new List<Bid>(),
                 Comments = new List<Comment>(),
@@ -214,7 +262,7 @@ namespace AuctionBackend.Controllers
                 UserId = userId,
                 Price = bid.Price,
                 AuctionRecords = auction.AuctionRecords,
-                AuctionId = bid.AuctionId
+                AuctionId = auctionId
             };
 
             var auctionRecord = new AuctionRecord
@@ -230,17 +278,28 @@ namespace AuctionBackend.Controllers
             // Assign the bid as the winner bid
             auction.WinnerBidId = bid.BidId;
 
-            _context.Entry(auction).State = EntityState.Modified;
+            //_context.Entry(auction).State = EntityState.Modified;
+
+            auction.Bids.Add(newBid);
 
             auction.AuctionRecords.Add(auctionRecord);
             newBid.AuctionRecords.Add(auctionRecord);
 
             _context.AuctionRecords.Add(auctionRecord);
             _context.Bids.Add(newBid);
-            
 
-            // Save changes to the database
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions
+                Console.WriteLine($"Error saving changes: {ex}");
+                throw; // Rethrow the exception to maintain original behavior
+            }
 
             return Ok(new ApiResponse<object>("Bid placed successfully"));
         }

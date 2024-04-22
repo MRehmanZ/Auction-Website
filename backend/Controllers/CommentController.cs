@@ -46,7 +46,6 @@ namespace AuctionBackend.Controllers
 
         // POST: api/comment
         [HttpPost]
-        [HttpPost]
         public async Task<IActionResult> CreateComment([FromBody] Comment comment)
         {
 

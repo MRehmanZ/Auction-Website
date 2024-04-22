@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace AuctionBackend.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -92,19 +92,28 @@ namespace AuctionBackend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, 
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid login attempt.");
+            }
+
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return Unauthorized("Please verify your email before logging in.");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
                 isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var token = GenerateJwtToken(user, roles);
-                    return Ok(new { Token = token });
-                }
+                var roles = await _userManager.GetRolesAsync(user);
+                var token = GenerateJwtToken(user, roles);
+                return Ok(new { Token = token });
             }
+
             return Unauthorized("Invalid login attempt.");
         }
 

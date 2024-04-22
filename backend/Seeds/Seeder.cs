@@ -81,20 +81,23 @@ namespace AuctionBackend.Seeds
 
     private static async Task CreateAuctionItem(AuctionContext context, ApplicationUser user)
     {
-        var auctionItem = new Auction
-        {
-            Name = "Television",
-            Condition = Auction.ItemCondition.NEW,
-            Description = "Recently refurbished, but new condition",
-            UserId = user.Id,
-            IsActive = true,
-            Price = 590
-        };
+            var auctionItem = new Auction
+            {
+                Name = "Television",
+                Condition = Auction.ItemCondition.NEW,
+                Description = "Recently refurbished, but new condition",
+                UserId = user.Id,
+                IsActive = true,
+                ImageUrl = "https://media.currys.biz/i/currysprod/10248449?$l-large$&fmt=auto",
+                Price = 590,
+                ExpiryDate = DateTime.Now.AddDays(12)
+            };
 
         var category = await context.Categories.FirstOrDefaultAsync(c => c.Name == "Electronics");
         if (category != null)
         {
             auctionItem.CategoryId = category.CategoryId;
+            auctionItem.CategoryName = category.Name;
             category.Auctions.Add(auctionItem);
         }
 

@@ -59,13 +59,14 @@ namespace AuctionBackend.Models
 
         public decimal CurrentHighestBid { get; set; }
 
+        public string? ImageUrl { get; set; }
 
         // Collection navigation property for Bids placed by the user
         public ICollection<Bid> Bids { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
-
-         public ICollection<AuctionRecord> AuctionRecords { get; set; }
+        
+        public ICollection<AuctionRecord> AuctionRecords { get; set; }
 
     }
 }

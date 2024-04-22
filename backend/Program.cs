@@ -58,11 +58,38 @@ namespace AuctionBackend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                });
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReact", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000") // Allow requests from React frontend
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseCors("AllowReact");
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.UseHttpsRedirection();
             app.UseAuthentication(); // Add this line to enable authentication middleware
