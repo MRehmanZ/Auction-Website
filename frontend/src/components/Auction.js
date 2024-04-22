@@ -248,7 +248,10 @@ export default function Auction() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-4xl font-bold">
-                    £{currentHighestBid !== 0 ? currentHighestBid : price}
+                    £
+                    {currentHighestBid !== 0
+                      ? new Intl.NumberFormat().format(currentHighestBid)
+                      : new Intl.NumberFormat().format(price)}
                   </div>
                   <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     {currentHighestBid !== 0 ? "Current Highest Bid" : "Price"}

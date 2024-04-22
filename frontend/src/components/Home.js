@@ -34,7 +34,7 @@ const Home = () => {
     };
 
     fetchAuctionItems();
-  }, []);
+  }, [totalPages]);
 
   const calculateTotalPages = (totalItems) => {
     const pages = totalItems / itemsPerPage;

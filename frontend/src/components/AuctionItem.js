@@ -97,7 +97,10 @@ const AuctionItem = ({
               {currentHighestBid !== 0 ? "Current Bid" : "Price"}
             </span>
             <span className="ml-2 text-gray-700 dark:text-gray-300 text-lg font-bold">
-              £{currentHighestBid ? currentHighestBid : price}
+              £
+              {currentHighestBid
+                ? new Intl.NumberFormat().format(currentHighestBid)
+                : new Intl.NumberFormat().format(price)}
             </span>
           </div>
           <Button size="sm" onClick={handlePlaceBidClick}>
