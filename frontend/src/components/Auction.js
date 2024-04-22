@@ -26,6 +26,8 @@ export default function Auction() {
   const [comments, setComments] = useState([]);
   const [bids, setBids] = useState([]);
 
+  const [username, setUsername] = useState("");
+
   const [placeBidPrice, setPlaceBidPrice] = useState();
 
   const [comment, setComment] = useState("");
@@ -66,9 +68,22 @@ export default function Auction() {
           setExpiryDate(item.expiryDate);
           setCurrentHighestBid(item.currentHighestBid);
           setImageUrl(item.imageUrl);
-          setUser(item.user);
+          setUser(item.userId);
           setPrice(item.price);
           setDescription(item.description);
+
+          // Fetch the username using the userId
+          const userResponse = await axios.get(
+            `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/user/${item.userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (userResponse.data.data) {
+            setUsername(userResponse.data.data.userName);
+          }
 
           setLoading(false);
         }
@@ -89,7 +104,6 @@ export default function Auction() {
         return;
       }
 
-      console.log("PLACE BID, auction id: " + auction_id);
       const response = await axios.post(
         `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction/${auction_id}/place-bid`,
         {
@@ -124,7 +138,6 @@ export default function Auction() {
         return;
       }
 
-      console.log("PLACE BID, auction id: " + auction_id);
       const response = await axios.post(
         `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/comment`,
         {
@@ -215,22 +228,30 @@ export default function Auction() {
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Created
                     </p>
-                    <p>{format(createdDate, "dd/MM/yyyy, h:mm a")}</p>
+                    <p>{createdDate}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Expires
                     </p>
-                    <p>{format(expiryDate, "dd/MM/yyyy, h:mm a")}</p>
+                    <p>{expiryDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      Seller
+                    </p>
+                    <p>{username}</p>
                   </div>
                 </div>
                 <div className="prose max-w-none">
                   <p>{description}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="text-4xl font-bold">£{currentHighestBid}</div>
+                  <div className="text-4xl font-bold">
+                    £{currentHighestBid !== 0 ? currentHighestBid : price}
+                  </div>
                   <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Current Highest Bid
+                    {currentHighestBid !== 0 ? "Current Highest Bid" : "Price"}
                   </div>
                 </div>
               </div>

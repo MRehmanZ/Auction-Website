@@ -33,7 +33,7 @@ const Bid = ({ price, userId, createdDate }) => {
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching bid:", error);
+        console.error("Error fetching user:", error);
         setLoading(false);
       }
     };

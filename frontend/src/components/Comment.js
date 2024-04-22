@@ -29,11 +29,10 @@ const Comment = ({ userId, description }) => {
         );
         if (response.data.data) {
           setUsername(response.data.data.userName);
-          console.log(username);
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching bid:", error);
+        console.error("Error fetching user:", error);
         setLoading(false);
       }
     };
