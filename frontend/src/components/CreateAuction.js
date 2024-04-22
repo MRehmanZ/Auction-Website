@@ -43,14 +43,16 @@ const CreateAuction = () => {
     { label: "POOR", value: 5 },
   ];
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         if (categories.length === 0) {
-          const token = localStorage.getItem("token");
           if (!token) {
-            toast.error("Please login.");
+            setError("Not logged in");
             navigate("/login?redirectTo=create-auction");
+            toast.error("Please login.");
             return;
           }
           const response = await axios.get(
@@ -76,7 +78,7 @@ const CreateAuction = () => {
       }
     };
     fetchCategories();
-  }, [categories]);
+  }, [categories, error]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -92,10 +94,10 @@ const CreateAuction = () => {
 
   const handleCreateAuction = async (e) => {
     e.preventDefault();
-
-    const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Please login.");
+      navigate("/login?redirectTo=create-auction");
+      setError("Not logged in");
       return;
     }
 

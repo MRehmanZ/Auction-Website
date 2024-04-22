@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Create Auction", href: "/create-auction", current: false },
-  { name: "About Us", href: "/aboutus", current: false },
+  { name: "Location", href: "/aboutus", current: false },
 ];
 
 export default function NavBar({ isLoggedIn, handleLogout }) {

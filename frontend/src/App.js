@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import Register from "./components/Register"; // Assuming you have this component
-import VerifyEmail from "./components/VerifyEmail"; // Assuming you have this component
-import NavBar from "./components/NavBar"; // Assuming you have this component
+import Register from "./components/Register";
+import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import axios from "axios";
 import { toast } from "sonner";
@@ -50,7 +49,6 @@ const App = () => {
             path="/register"
             element={<Register onLogin={handleLogin} />}
           />
-          <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/create-auction" element={<CreateAuction />} />
           <Route path="/auction/:auction_id" element={<Auction />} />
           <Route path="/aboutus" element={<AboutUs />} />

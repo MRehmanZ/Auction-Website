@@ -11,7 +11,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages] = useState(5);
+  const [totalPages, setTotalPages] = useState(5);
 
   const itemsPerPage = 6;
 
@@ -23,8 +23,9 @@ const Home = () => {
         );
         if (response.data) {
           setAuctionItems(response.data.$values);
+          setTotalPages(calculateTotalPages(auctionItems.length));
+          console.log(calculateTotalPages(13));
         }
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching auction items:", error);
         toast.error("There is something wrong. Please refresh the page.");
@@ -35,6 +36,12 @@ const Home = () => {
 
     fetchAuctionItems();
   }, []);
+
+  const calculateTotalPages = (totalItems) => {
+    const pages = totalItems / 6;
+    if (pages < 1) return 1;
+    return Math.ceil(pages);
+  };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;

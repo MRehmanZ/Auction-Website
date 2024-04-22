@@ -2,7 +2,7 @@ import React from "react";
 
 const Paginate = ({ totalPages, currentPage, onPageChange }) => {
   const getPageNumbers = () => {
-    const MAX_PAGES_TO_SHOW = 3; // Maximum number of pages to show
+    const MAX_PAGES_TO_SHOW = totalPages; // Maximum number of pages to show
     let startPage = 1;
     let endPage = totalPages;
 
@@ -36,6 +36,7 @@ const Paginate = ({ totalPages, currentPage, onPageChange }) => {
           <button
             className="page-link font-bold"
             onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage == 1}
           >
             Previous
           </button>
@@ -62,6 +63,7 @@ const Paginate = ({ totalPages, currentPage, onPageChange }) => {
           <button
             className="page-link font-bold"
             onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
           >
             Next
           </button>
