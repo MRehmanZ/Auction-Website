@@ -39,7 +39,11 @@ const Login = ({ onLogin }) => {
       }
     } catch (err) {
       setError("Invalid email or password");
-      toast.error("Invalid email or password");
+      if (err) {
+        toast.error(err.response.data);
+      } else {
+        toast.error("Invalid email or password");
+      }
     }
   };
 

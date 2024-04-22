@@ -33,7 +33,11 @@ function Register({ onLogin }) {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Invalid email or password");
+      if (error) {
+        toast.error(error.response.data.$values[0].description);
+      } else {
+        toast.error("Invalid email or password");
+      }
     }
   };
 
