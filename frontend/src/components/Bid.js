@@ -16,7 +16,7 @@ const Bid = ({ price, userId, createdDate }) => {
         const token = localStorage.getItem("token");
         if (!token) {
           toast.error("Please login.");
-          navigate("/login"); // TODO: redirect to current auction item page
+          navigate("/login");
           return;
         }
         const response = await axios.get(

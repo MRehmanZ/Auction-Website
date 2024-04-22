@@ -41,11 +41,10 @@ export default function Auction() {
   useEffect(() => {
     const fetchAuction = async () => {
       try {
-        console.log("Auction Id: " + auction_id);
         const token = localStorage.getItem("token");
         if (!token) {
           toast.error("Please login.");
-          navigate("/login"); // TODO: redirect to current auction item page
+          navigate("/login");
           return;
         }
         const response = await axios.get(
