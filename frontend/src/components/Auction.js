@@ -32,7 +32,7 @@ export default function Auction() {
 
   const [comment, setComment] = useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { auction_id } = useParams();
 
@@ -47,6 +47,8 @@ export default function Auction() {
           navigate("/login");
           return;
         }
+
+        // includes Bids and Comments
         const response = await axios.get(
           `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction/${auction_id}`,
           {
@@ -55,13 +57,14 @@ export default function Auction() {
             },
           }
         );
+
         if (response.data.data) {
           const item = response.data.data;
 
           setName(item.name);
           setBids(item.bids.$values);
-          setCategory(item.categoryName);
           setComments(item.comments.$values);
+          setCategory(item.categoryName);
           setCreatedDate(item.createdDate);
           setCondition(item.condition);
           setExpiryDate(item.expiryDate);
@@ -114,11 +117,10 @@ export default function Auction() {
           },
         }
       );
-      console.log(response.status);
+
       if (response.status === 200) {
         toast.success("Bid placed successfully");
-
-        navigate(0);
+        navigate(0); // refresh page
       } else {
         toast.warning("There is something wrong. Please try again.");
       }
@@ -149,11 +151,10 @@ export default function Auction() {
           },
         }
       );
-      console.log(response.status);
+
       if (response.status === 201) {
         toast.success("Comment submitted successfully");
-
-        navigate(0);
+        navigate(0); // refresh page
       } else {
         toast.warning("There is something wrong. Please try again.");
       }

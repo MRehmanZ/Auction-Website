@@ -7,7 +7,7 @@ import { Label } from "./ui/label";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
-function Register({ onLogin }) {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

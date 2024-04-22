@@ -3,9 +3,10 @@ import { AvatarImage, AvatarFallback, Avatar } from "./ui/avatar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Bid = ({ price, userId, createdDate }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
@@ -40,7 +41,9 @@ const Bid = ({ price, userId, createdDate }) => {
     fetchUser();
   }, []);
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <Avatar className="w-8 h-8 border">

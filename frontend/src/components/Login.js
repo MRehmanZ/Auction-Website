@@ -11,7 +11,6 @@ import { toast } from "sonner";
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -65,7 +64,6 @@ const Login = ({ onLogin }) => {
 
           <div className="grid gap-6">
             <form onSubmit={handleLogin}>
-              {error && <p className="text-sm text-red-500 ">{error}</p>}
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="email">Email</Label>

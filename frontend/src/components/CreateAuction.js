@@ -123,11 +123,7 @@ const CreateAuction = () => {
         }
       );
 
-      // Assuming the response contains the URL of the uploaded image
       setImageUrl(response.data.imageUrl);
-
-      // Use the imageUrl in your create auction request
-      // Other parts of the request...
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error("Error uploading image. Please try again.");

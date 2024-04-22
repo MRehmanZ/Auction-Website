@@ -45,10 +45,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route
-            path="/register"
-            element={<Register onLogin={handleLogin} />}
-          />
+          <Route path="/register" element={<Register />} />
           <Route path="/create-auction" element={<CreateAuction />} />
           <Route path="/auction/:auction_id" element={<Auction />} />
           <Route path="/aboutus" element={<AboutUs />} />

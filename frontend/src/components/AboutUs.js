@@ -11,7 +11,7 @@ const mapContainerStyle = {
 const center = {
   lat: 51.52101233298777,
   lng: -0.14009833003455338,
-};
+}; // location for University of Westminster
 
 const AboutUs = () => {
   const { isLoaded, loadError } = useLoadScript({

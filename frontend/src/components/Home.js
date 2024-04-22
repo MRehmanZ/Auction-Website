@@ -24,7 +24,6 @@ const Home = () => {
         if (response.data) {
           setAuctionItems(response.data.$values);
           setTotalPages(calculateTotalPages(auctionItems.length));
-          console.log(calculateTotalPages(13));
         }
       } catch (error) {
         console.error("Error fetching auction items:", error);
@@ -38,7 +37,7 @@ const Home = () => {
   }, []);
 
   const calculateTotalPages = (totalItems) => {
-    const pages = totalItems / 6;
+    const pages = totalItems / itemsPerPage;
     if (pages < 1) return 1;
     return Math.ceil(pages);
   };

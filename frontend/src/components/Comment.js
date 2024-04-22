@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Comment = ({ userId, description }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
@@ -39,7 +40,9 @@ const Comment = ({ userId, description }) => {
     fetchUser();
   }, []);
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="flex items-start gap-4">
       <Avatar>
         <AvatarImage alt="@commenter1" />
