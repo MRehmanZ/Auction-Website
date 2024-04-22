@@ -7,7 +7,7 @@ import { Label } from "./ui/label";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
-function Register() {
+function Register({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,6 +26,9 @@ function Register() {
 
       if (response.status === 200) {
         toast.success("Registered successfully");
+        const token = response.data.token;
+        localStorage.setItem("token", token); // Store token in localStorage so the user is logged in after registration
+        onLogin();
         navigate("/");
       }
     } catch (error) {
