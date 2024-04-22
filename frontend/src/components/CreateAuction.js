@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import LoadingSpinner from "./LoadingSpinner";
 
 const CreateAuction = () => {
   const [name, setName] = useState("");
@@ -282,7 +283,7 @@ const CreateAuction = () => {
             />
           </div>
           {loading ? (
-            <div>Loading...</div>
+            <LoadingSpinner />
           ) : (
             <div>
               <label

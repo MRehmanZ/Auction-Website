@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Create Auction", href: "/create-auction", current: false },
+  { name: "About Us", href: "/aboutus", current: false },
 ];
 
 export default function NavBar({ isLoggedIn, handleLogout }) {
@@ -40,7 +41,7 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
                       <a
                         key={item.name}
                         href={item.href}
-                        className="px-3 py-2 rounded-md text-sm font-medium"
+                        className="px-3 py-2 rounded-md text-sm font-medium text-white"
                       >
                         {item.name}
                       </a>

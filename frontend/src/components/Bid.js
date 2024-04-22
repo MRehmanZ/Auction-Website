@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "./ui/avatar";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const Bid = ({ price, userId, createdDate, bidId }) => {
+const Bid = ({ price, userId, createdDate }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
 
