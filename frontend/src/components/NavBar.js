@@ -2,7 +2,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button } from "./ui/button";
+import Avatar from "@mui/material/Avatar";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -30,13 +31,14 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <Link to="/">
-                    <h3 className="text-3xl text-white font-bold hover:text-gray-700 px-2">
+                    <h3 className="text-3xl text-white font-bold  px-2">
                       Bidify
                     </h3>
                   </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
+                    {/*Loop through navigation items and create links to each page */}
                     {navigation.map((item) => (
                       <a
                         key={item.name}
@@ -53,13 +55,9 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
                 {isLoggedIn ? (
                   <Menu as="div" className="ml-3 relative">
                     <div>
-                      <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                      <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none  ">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                        <Avatar />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -85,12 +83,22 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
                     </Transition>
                   </Menu>
                 ) : (
-                  <Button
-                    href="/login"
-                    className=" text-white hover:bg-gray-700"
-                  >
-                    Sign In
-                  </Button>
+                  <div className="flex space-x-4">
+                    <Button
+                      variant="outline"
+                      className="bg-gray-800 text-white"
+                      asChild
+                    >
+                      <Link to="/login">Login</Link>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="bg-gray-800 text-white"
+                      asChild
+                    >
+                      <Link to="/register">Register</Link>
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
