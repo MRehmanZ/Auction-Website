@@ -36,21 +36,21 @@ const AuctionItem = ({
 
   return (
     <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden">
-      <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-800">
+      <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
         {imageUrl ? (
           <div className="mb-4">
             <img
               src={imageUrl}
               alt={name}
-              className="w-full h-auto rounded-lg"
+              className="w-full h-auto rounded-lg "
             />
           </div>
         ) : (
           <img
             alt="Auction Item"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover "
             height="450"
-            src="/placeholder.svg"
+            src="/placeholder.png"
             style={{
               aspectRatio: "600/450",
               objectFit: "cover",
@@ -94,7 +94,7 @@ const AuctionItem = ({
         <div className="flex items-center justify-between">
           <div>
             <span className="text-gray-500 dark:text-gray-400 text-sm">
-              Current Bid:
+              {currentHighestBid !== 0 ? "Current Bid" : "Price"}
             </span>
             <span className="ml-2 text-gray-700 dark:text-gray-300 text-lg font-bold">
               £{currentHighestBid ? currentHighestBid : price}
