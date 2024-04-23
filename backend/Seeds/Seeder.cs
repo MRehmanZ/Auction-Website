@@ -19,7 +19,6 @@ namespace AuctionBackend.Seeds
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 
             await CreateUser(userManager, "Admin", "mrz707@outlook.com", "@Hello1234");
-            await CreateUser(userManager, "User", "emailtestreceive@gmail.com", "@ABcd1234");
 
             if (!context.Categories.Any())
                 {

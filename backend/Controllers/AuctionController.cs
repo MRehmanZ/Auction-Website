@@ -222,9 +222,22 @@ namespace AuctionBackend.Controllers
             {
                 return NotFound(new ApiResponse<object>("Auction not found"));
             }
-            var category = _context.Categories.FirstOrDefault(c => c.CategoryId.ToString() == auction.CategoryId.ToString());
 
-            category.Auctions.Remove(auction);
+            // Delete related records in AuctionRecords table
+            var auctionRecords = _context.AuctionRecords.Where(ar => ar.AuctionId == auction.AuctionId);
+            _context.AuctionRecords.RemoveRange(auctionRecords);
+
+            var bids = _context.Bids.Where(b => b.AuctionId == auction.AuctionId);
+            _context.Bids.RemoveRange(bids);
+
+            // Remove auction from category
+            var category = _context.Categories.FirstOrDefault(c => c.CategoryId.ToString() == auction.CategoryId.ToString());
+            if (category != null)
+            {
+                category.Auctions.Remove(auction);
+            }
+
+            // Remove auction
             _context.Auctions.Remove(auction);
             await _context.SaveChangesAsync();
 
