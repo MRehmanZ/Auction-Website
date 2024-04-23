@@ -9,6 +9,7 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Create Auction", href: "/create-auction", current: false },
   { name: "Manage Auctions", href: "/manage-auctions", current: false },
+  { name: "Admin", href: "/Admin", current: false },
   { name: "Location", href: "/location", current: false },
 ];
 
