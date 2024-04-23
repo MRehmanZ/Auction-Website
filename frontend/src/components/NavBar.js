@@ -32,7 +32,7 @@ export default function NavBar({ isLoggedIn, handleLogout }) {
                 <div className="flex-shrink-0 flex items-center">
                   <Link to="/">
                     <h3 className="text-3xl text-white font-bold  px-2">
-                      Bidify
+                      BidWise
                     </h3>
                   </Link>
                 </div>
