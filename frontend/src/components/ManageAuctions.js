@@ -78,17 +78,7 @@ const ManageAuctions = () => {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              myAuctionItems.map((item) => (
-                <AuctionRow
-                  name={item.name}
-                  price={item.price}
-                  currentHighestBid={item.currentHighestBid}
-                  expiryDate={item.expiryDate}
-                  category={item.categoryName}
-                  imageUrl={item.imageUrl}
-                  isActive={item.isActive}
-                />
-              ))
+              myAuctionItems.map((item) => <AuctionRow auctionData={item} />)
             )}
           </TableBody>
         </Table>

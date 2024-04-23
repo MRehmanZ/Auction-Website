@@ -1,16 +1,9 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Button } from "./ui/button";
 import { TableRow, TableCell } from "./ui/table";
+import { useNavigate } from "react-router-dom";
 
-const AuctionRow = ({
-  name,
-  price,
-  category,
-  currentHighestBid,
-  imageUrl,
-  expiryDate,
-  isActive,
-}) => {
+const AuctionRow = ({ auctionData }) => {
   const calculateRemainingDays = (expiryDate) => {
     let seconds = Math.abs(new Date(expiryDate) - new Date()) / 1000;
 
@@ -21,21 +14,30 @@ const AuctionRow = ({
   const getStatus = (isActive) => {
     if (!isActive)
       return <div className="text-red-500 font-medium">Inactive</div>;
-    if (calculateRemainingDays(expiryDate) > 0)
+    if (calculateRemainingDays(auctionData.expiryDate) > 0)
       return <div className="text-green-500 font-medium">Active</div>;
     return <div className="text-gray-500 font-medium">Ended</div>;
+  };
+
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    // Redirect to the auction update page with the auctionId
+    navigate(`/manage-auctions/${auctionData.auctionId}`, {
+      state: { auctionData },
+    });
   };
 
   return (
     <TableRow>
       <TableCell>
         <div className="flex items-center gap-4">
-          {imageUrl ? (
+          {auctionData.imageUrl ? (
             <img
-              alt={name}
+              alt={auctionData.name}
               className="rounded-md"
               height={64}
-              src={imageUrl}
+              src={auctionData.imageUrl}
               style={{
                 aspectRatio: "64/64",
                 objectFit: "cover",
@@ -56,25 +58,25 @@ const AuctionRow = ({
             />
           )}
           <div>
-            <div className="font-medium">{name}</div>
+            <div className="font-medium">{auctionData.name}</div>
             <div className="text-gray-500 dark:text-gray-400 text-sm">
-              {category}
+              {auctionData.category}
             </div>
           </div>
         </div>
       </TableCell>
       <TableCell>
-        <div className="font-medium">£{currentHighestBid}</div>
+        <div className="font-medium">£{auctionData.currentHighestBid}</div>
       </TableCell>
       <TableCell>
         <div className="text-gray-800 font-medium">
-          {calculateRemainingDays(expiryDate)}
+          {calculateRemainingDays(auctionData.expiryDate)}
         </div>
       </TableCell>
-      <TableCell>{getStatus(isActive)}</TableCell>
+      <TableCell>{getStatus(auctionData.isActive)}</TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
-          <Button size="icon" variant="outline">
+          <Button size="icon" variant="outline" onClick={handleEdit}>
             <Edit className="h-4 w-4" />
             <span className="sr-only">Edit</span>
           </Button>
