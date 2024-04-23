@@ -66,7 +66,11 @@ const AuctionRow = ({ auctionData }) => {
         </div>
       </TableCell>
       <TableCell>
-        <div className="font-medium">£{auctionData.currentHighestBid}</div>
+        {auctionData.currentHighestBid !== 0 ? (
+          <div className="font-medium">£{auctionData.currentHighestBid} </div>
+        ) : (
+          <div className="font-medium text-gray-400 ">No bids</div>
+        )}
       </TableCell>
       <TableCell>
         <div className="text-gray-800 font-medium">
