@@ -12,6 +12,7 @@ import Auction from "./components/Auction";
 import Location from "./components/Location";
 import ManageAuctions from "./components/ManageAuctions";
 import AmendAuction from "./components/AmendAuction";
+import Admin from "./components/Admin";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -55,10 +56,13 @@ const App = () => {
           />
           <Route path="/auction/:auction_id" element={<Auction />} />
           <Route path="/location" element={<Location />} />
+          <Route path="/Admin" element={<Admin/>} />
         </Routes>
       </div>
     </Router>
   );
 };
+
+
 
 export default App;
