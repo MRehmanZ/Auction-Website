@@ -59,10 +59,10 @@ const AuctionRow = ({ auctionData }) => {
           },
         }
       );
-      console.log(response);
+
       if (response.status === 204) {
-        toast.success("Auction deleted");
-        navigate("/manage-auctions");
+        navigate(0); //refresh to show updated list of auction items
+        toast.success("Auction deleted successfully");
       } else {
         toast.warning("Something went wrong. Please try again.");
       }

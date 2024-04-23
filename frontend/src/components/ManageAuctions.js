@@ -78,7 +78,9 @@ const ManageAuctions = () => {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              myAuctionItems.map((item) => <AuctionRow auctionData={item} />)
+              myAuctionItems.map((item) => (
+                <AuctionRow key={item.auctionId} auctionData={item} />
+              ))
             )}
           </TableBody>
         </Table>
