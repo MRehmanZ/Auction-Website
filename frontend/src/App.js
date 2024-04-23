@@ -7,10 +7,9 @@ import Home from "./components/Home";
 import axios from "axios";
 import { toast } from "sonner";
 import { Toaster } from "sonner";
-
 import CreateAuction from "./components/CreateAuction";
 import Auction from "./components/Auction";
-import AboutUs from "./components/AboutUs";
+import Location from "./components/Location";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,7 +47,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/create-auction" element={<CreateAuction />} />
           <Route path="/auction/:auction_id" element={<Auction />} />
-          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/location" element={<Location />} />
         </Routes>
       </div>
     </Router>

@@ -13,7 +13,7 @@ const center = {
   lng: -0.14009833003455338,
 }; // location for University of Westminster
 
-const AboutUs = () => {
+const Location = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -40,4 +40,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default Location;
