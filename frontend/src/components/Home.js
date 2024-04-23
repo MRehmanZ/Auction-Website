@@ -8,6 +8,7 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const Home = () => {
   const [auctionItems, setAuctionItems] = useState([]);
+  const [activeAuctionItems, setActiveAuctionItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +24,7 @@ const Home = () => {
         );
         if (response.data) {
           setAuctionItems(response.data.$values);
+          setActiveAuctionItems(auctionItems.filter((item) => item.isActive));
           setTotalPages(calculateTotalPages(auctionItems.length));
         }
       } catch (error) {
@@ -57,26 +59,24 @@ const Home = () => {
           <LoadingSpinner />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {auctionItems
+            {activeAuctionItems
               .toReversed()
               .slice(startIndex, endIndex)
-              .map((item) =>
-                item.isActive ? (
-                  <AuctionItem
-                    key={item.auctionId}
-                    name={item.name}
-                    description={item.description}
-                    price={item.price}
-                    condition={item.condition}
-                    category={item.categoryName}
-                    createdDate={format(item.createdDate, "dd/MM/yyyy, h:mm a")}
-                    expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
-                    currentHighestBid={item.currentHighestBid}
-                    auctionId={item.auctionId}
-                    imageUrl={item.imageUrl}
-                  />
-                ) : null
-              )}
+              .map((item) => (
+                <AuctionItem
+                  key={item.auctionId}
+                  name={item.name}
+                  description={item.description}
+                  price={item.price}
+                  condition={item.condition}
+                  category={item.categoryName}
+                  createdDate={format(item.createdDate, "dd/MM/yyyy, h:mm a")}
+                  expiryDate={format(item.expiryDate, "dd/MM/yyyy, h:mm a")}
+                  currentHighestBid={item.currentHighestBid}
+                  auctionId={item.auctionId}
+                  imageUrl={item.imageUrl}
+                />
+              ))}
           </div>
         )}
 
