@@ -2,6 +2,16 @@ import { Delete, Edit } from "@mui/icons-material";
 import { Button } from "./ui/button";
 import { TableRow, TableCell } from "./ui/table";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+import LoadingSpinner from "./LoadingSpinner";
 
 const AuctionRow = ({ auctionData }) => {
   const calculateRemainingDays = (expiryDate) => {
@@ -27,6 +37,42 @@ const AuctionRow = ({ auctionData }) => {
     navigate(`/manage-auctions/${auctionData.auctionId}`, {
       state: { auctionData },
     });
+  };
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login?redirectTo=update-auction");
+        toast.error("Please login.");
+        return;
+      }
+      setLoading(true);
+      const response = await axios.delete(
+        `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction/${auctionData.auctionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      if (response.status === 204) {
+        toast.success("Auction deleted");
+        navigate("/manage-auctions");
+      } else {
+        toast.warning("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error deleting auction:", err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+      setOpenDeleteDialog(false);
+    }
   };
 
   return (
@@ -85,10 +131,37 @@ const AuctionRow = ({ auctionData }) => {
             <Edit className="h-4 w-4" />
             <span className="sr-only">Edit</span>
           </Button>
-          <Button size="icon" variant="outline">
-            <Delete />
-            <span className="sr-only">Delete</span>
-          </Button>
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => setOpenDeleteDialog(true)}
+              >
+                <Delete />
+                <span className="sr-only">Delete</span>
+              </Button>
+              <Dialog
+                open={openDeleteDialog}
+                onClose={() => setOpenDeleteDialog(false)}
+              >
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                  Are you sure you want to delete this auction?
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpenDeleteDialog(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleDeleteConfirm} color="error">
+                    Delete
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </>
+          )}
         </div>
       </TableCell>
     </TableRow>

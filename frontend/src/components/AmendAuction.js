@@ -151,10 +151,6 @@ const AmendAuction = () => {
     }
 
     try {
-      console.log(auctionData);
-      console.log(isActive);
-      console.log(condition);
-
       const response = await axios.put(
         `${process.env.REACT_APP_AUCTION_BACKEND_API_URL}/auction/${auctionData.auctionId}`,
         {
