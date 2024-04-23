@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const AuctionRow = ({ auctionData }) => {
   const calculateRemainingDays = (expiryDate) => {
-    let seconds = Math.abs(new Date(expiryDate) - new Date()) / 1000;
+    let seconds = (new Date(expiryDate) - new Date()) / 1000;
 
+    if (seconds <= 0) return 0;
     let daysDifference = Math.floor(seconds / (60 * 60 * 24));
     return daysDifference;
   };
@@ -16,7 +17,7 @@ const AuctionRow = ({ auctionData }) => {
       return <div className="text-red-500 font-medium">Inactive</div>;
     if (calculateRemainingDays(auctionData.expiryDate) > 0)
       return <div className="text-green-500 font-medium">Active</div>;
-    return <div className="text-gray-500 font-medium">Ended</div>;
+    return <div className="text-red-500 font-medium">Ended</div>;
   };
 
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const AuctionRow = ({ auctionData }) => {
         )}
       </TableCell>
       <TableCell>
-        <div className="text-gray-800 font-medium">
+        <div className="text-blue-600 font-medium">
           {calculateRemainingDays(auctionData.expiryDate)}
         </div>
       </TableCell>
