@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 import CreateAuction from "./components/CreateAuction";
 import Auction from "./components/Auction";
 import Location from "./components/Location";
+import ManageAuctions from "./components/ManageAuctions";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create-auction" element={<CreateAuction />} />
+          <Route path="/manage-auctions" element={<ManageAuctions />} />
           <Route path="/auction/:auction_id" element={<Auction />} />
           <Route path="/location" element={<Location />} />
         </Routes>

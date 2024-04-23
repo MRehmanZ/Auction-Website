@@ -9,6 +9,7 @@
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^1.0.6",
     "@hookform/resolvers": "^3.3.4",
+    "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
