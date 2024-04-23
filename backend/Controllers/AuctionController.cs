@@ -23,6 +23,31 @@ namespace AuctionBackend.Controllers
             _context = context;
         }
 
+        [HttpGet("my-auctions")]
+        public async Task<ActionResult> GetMyAuctions()
+        {
+            // Get the user ID from claims
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                return BadRequest("Please login.");
+            }
+
+            try
+            {
+                // Fetch auctions associated with the user
+                var auctions = await _context.Auctions
+                    .Where(a => a.UserId == userId)
+                    .ToListAsync();
+
+                return Ok(auctions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error retrieving auctions: {ex.Message}");
+            }
+        }
 
         [HttpPost("upload-image")]
         public async Task<IActionResult> UploadImage()
