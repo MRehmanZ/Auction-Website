@@ -76,7 +76,7 @@ const AuctionItem = ({
               Created:
             </span>
             <span className="ml-1 text-gray-700 dark:text-gray-300 text-sm">
-              {createdDate}
+            {createdDate}
             </span>
           </div>
 

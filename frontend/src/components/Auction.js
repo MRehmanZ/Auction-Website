@@ -228,13 +228,13 @@ export default function Auction() {
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Created
                     </p>
-                    <p>{createdDate}</p>
+                    <p>{format(createdDate, "dd/MM/yyyy, h:mm a")}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Expires
                     </p>
-                    <p>{expiryDate}</p>
+                    <p>{format(expiryDate, "dd/MM/yyyy, h:mm a")}</p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
