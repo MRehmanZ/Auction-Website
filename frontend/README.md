@@ -16,6 +16,6 @@
 - [x] Compatible with Mobile and Tablet
 - [x] Make use of 'alt=' to improve accessibility
 - [x] Add pagination
-- [x] Use of Tailwind CSS, react widgets, and tabs
+- [x] Use of react widgets and tabs
 - [x] Integration of a Maps API
 - [x] Utilisation of React's state management 
