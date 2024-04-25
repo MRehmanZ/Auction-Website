@@ -15,6 +15,7 @@
 - [x] Error handling for authentication and other controllers (toast)
 - [x] Compatible with Mobile and Tablet
 - [x] Make use of 'alt=' to improve accessibility
+- [X] Setup shadcn/ui to create various components for login, auction creation, update, and auction item display
 - [x] Add pagination
 - [x] Use of react widgets and tabs
 - [x] Integration of a Maps API
@@ -43,7 +44,7 @@ Make sure to run the following command in the root of the frontend directory:
 
 ### `npm install`
 
-Then, to run the app in development mode:
+Then, to run the app in development mode run the following command:
 
 ### `npm start`
 
