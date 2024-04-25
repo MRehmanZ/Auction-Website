@@ -26,7 +26,7 @@
 
 Make sure you have the backend running locally and cors setup in the Program.cs as follows:
 
-### `builder.Services.AddCors(options =>
+```builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", builder =>
     {
@@ -37,7 +37,7 @@ Make sure you have the backend running locally and cors setup in the Program.cs 
 });
 
 app.UseCors("AllowReact");
-`
+```
 
 Make sure to run the following command in the root of the frontend directory:
 
