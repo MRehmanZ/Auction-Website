@@ -81,3 +81,5 @@ dotnet add package Microsoft.Extensions.DependencyInjection
 
 dotnet ef migrations add InitCreateMigrations
 dotnet ef database update
+
+### Project API URL: `https://localhost:7233/api`
