@@ -57,20 +57,27 @@ https://auctionbackendapi.azurewebsites.net/api/AuctionRecord
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
-
-Microsoft.EntityFrameworkCore.Design
-
+dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet new tool-manifest
 
 dotnet tool install --local dotnet-ef
 
-dotnet ef migrations add InitialCreate
-
-dotnet ef database update
-
 dotnet tool install --local dotnet-aspnet-codegenerator
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
-
 dotnet add package Microsoft.AspNet.Identity.EntityFramework --version 2.2.4
 dotnet add package System.Security.Claims --version 4.3.0
 dotnet add package Newtonsoft.Json --version 13.0.3
+dotnet add package Microsoft.AspNetCore.JsonPatch
+dotnet add package MailKit
+dotnet add package Microsoft.Aspnet.Identity.Core
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package Microsoft.AspNetCore.Identity
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+dotnet add package System.Text.Json
+dotnet add package Swashbuckle.AspNetCore
+dotnet add package Microsoft.Extensions.DependencyInjection
+
+# Before running the application:
+
+dotnet ef migrations add InitCreateMigrations
+dotnet ef database update
