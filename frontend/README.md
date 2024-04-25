@@ -42,8 +42,8 @@ app.UseCors("AllowReact");
 
 Add the following environment variables to your .env file:
 
-### REACT_APP_AUCTION_BACKEND_API_URL=[YOUR BACKEND API URL]
-### REACT_APP_GOOGLE_MAPS_API_KEY=[YOUR GOOGLE MAPS API KEY]
+### `REACT_APP_AUCTION_BACKEND_API_URL=[YOUR BACKEND API URL]`
+### `REACT_APP_GOOGLE_MAPS_API_KEY=[YOUR GOOGLE MAPS API KEY]`
 
 Make sure to run the following command in the root of the frontend directory:
 
